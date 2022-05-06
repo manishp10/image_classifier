@@ -57,15 +57,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
 
     private func analyseImage(image: UIImage?) {
-        guard let buffer = image?.resize(size: CGSize(width: 224, height: 224))?
+        guard let buffer = image?.resize(size: CGSize(width: 180, height: 180))?
         .getCVPixelBuffer() else {
                 return
             }
         do{
             print(buffer)
             let config = MLModelConfiguration()
-            let model = try Resnet50(configuration: config)
-            let input = Resnet50Input(image: buffer)
+            let model = try flower_classifier(configuration: config)
+            let input = flower_classifierInput(sequential_2_input: buffer)
             let output = try model.prediction(input: input)
             let text = output.classLabel
             label.text = text
